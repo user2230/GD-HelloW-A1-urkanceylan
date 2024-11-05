@@ -28,6 +28,7 @@ public class DayNightCycle : MonoBehaviour
         {
             timeOfDay = 0f; // Begin een nieuwe dag als de huidige voorbij is
         }
+       // Debug.Log(timeOfDay);
 
         // Rotatie van het licht instellen (draait rond de x-as)
         float sunAngle = timeOfDay * 360f - 90f; // Rotatie tussen -90 (zonsopkomst) en 270 (zonsondergang)
@@ -49,7 +50,7 @@ public class DayNightCycle : MonoBehaviour
         isNight = (timeOfDay > 0.75f || timeOfDay < 0.25f); // Nacht is tussen 75% en 25% van de cyclus
 
         // Activeer of deactiveer stormen 's nachts
-        HandleNightStorms();
+       HandleNightStorms();
     }
 
     void HandleNightStorms()
