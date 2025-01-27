@@ -35,8 +35,8 @@ public class PlayerJump : MonoBehaviour
     }
 
     bool IsGrounded()
-    {
-        // Cast a ray downwards to check if the player is grounded
+        {
+            // Cast a ray downwards to check if the player is grounded
         return Physics.Raycast(transform.position, Vector3.down, 1f, groundLayer);
     }
 }
