@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;  // Snelheid van de speler
     public float jumpForce = 5f;  // Springkracht
+    public Animator animator;
 
     private Rigidbody rb;
     public GameObject animatedModel;
@@ -21,12 +22,17 @@ public class PlayerController : MonoBehaviour
 
         // Verplaats de speler op de X- en Z-as
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
-        rb.AddForce(movement * speed);
+        rb.velocity = new Vector3(movement.x * speed, rb.velocity.y, movement.z * speed);
 
-        // Springen (optioneel, controleer of de speler op de grond is)
-        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.1f)
+        if (movement != Vector3.zero)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animator.ResetTrigger("idle");
+            animator.SetTrigger("walk");
+        }
+        else
+        {
+            animator.ResetTrigger("walk");
+            animator.SetTrigger("idle");
         }
         animatedModel.transform.localPosition = new Vector3();
     }
