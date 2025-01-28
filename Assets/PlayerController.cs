@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+       Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();  // Haal de Rigidbody van de speler op
     }
 
@@ -20,11 +21,16 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal"); // A/D of pijltjestoetsen
         float moveVertical = Input.GetAxis("Vertical");  // W/S of pijltjestoetsen
 
+        float rot=Input.GetAxis("Mouse X");
+        Debug.Log(rot);
+        gameObject.transform.Rotate(0, rot*2, 0);
         // Verplaats de speler op de X- en Z-as
-        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
-        rb.velocity = new Vector3(movement.x * speed, rb.velocity.y, movement.z * speed);
+        Vector3 movementF = transform.forward*moveVertical;
+        Vector3 movementS = transform.right * moveHorizontal;
+        movementF += movementS;
+        rb.velocity = new Vector3(movementF.x * speed, rb.velocity.y, movementF.z * speed);
 
-        if (movement != Vector3.zero)
+        if (movementF != Vector3.zero)
         {
             animator.ResetTrigger("idle");
             animator.SetTrigger("walk");
